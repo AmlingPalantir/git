@@ -11,7 +11,7 @@ SYNOPSIS
 [verse]
 'git merge-file' [-L <current-name> [-L <base-name> [-L <other-name>]]]
 	[--ours|--theirs|--union] [-p|--stdout] [-q|--quiet] [--marker-size=<n>]
-	[--[no-]diff3] <current-file> <base-file> <other-file>
+	[--[no-]diff3] [--include-resolved] <current-file> <base-file> <other-file>
 
 
 DESCRIPTION
@@ -69,6 +69,10 @@ OPTIONS
 
 --diff3::
 	Show conflicts in "diff3" style.
+
+--include-resolved::
+	Always show hunks, even when they would otherwise be automatically
+	resolved.
 
 --ours::
 --theirs::
