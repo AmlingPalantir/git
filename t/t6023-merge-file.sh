@@ -359,4 +359,34 @@ test_expect_success 'conflict sections match existing line endings' '
 	test $(tr "\015" Q <nolf.txt | grep "^[<=>].*Q$" | wc -l) = 0
 '
 
+cat >expect <<\EOF
+<<<<<<< new1.txt
+Dominus regit me,
+et nihil mihi deerit.
+||||||| orig.txt
+Dominus regit me,
+et nihil mihi deerit.
+=======
+Dominus regit me, et nihil mihi deerit.
+>>>>>>> new2.txt
+In loco pascuae ibi me collocavit,
+super aquam refectionis educavit me;
+animam meam convertit,
+deduxit me super semitas jusitiae,
+propter nomen suum.
+<<<<<<< new1.txt
+Nam et si ambulavero in medio umbrae mortis,
+non timebo mala, quoniam tu mecum es:
+virga tua et baculus tuus ipsa me consolata sunt.
+||||||| orig.txt
+=======
+>>>>>>> new2.txt
+EOF
+
+test_expect_success '"--include-resolved output"' '
+	git merge-file -p --include-resolved --diff3 \
+		new1.txt orig.txt new2.txt >actual &&
+	test_cmp expect actual
+'
+
 test_done
